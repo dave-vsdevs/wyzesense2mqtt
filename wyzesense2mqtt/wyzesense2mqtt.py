@@ -93,8 +93,10 @@ def init_config():
     # load user config over base
     if (os.path.isfile(os.path.join(CONFIG_PATH, MAIN_CONFIG_FILE))):
         user_config = read_yaml_file(os.path.join(CONFIG_PATH, MAIN_CONFIG_FILE))
-        CONFIG.update(user_config)
-
+        if 'CONFIG' not in globals(): # FIX NO SAMPLE DIRECTORY
+            CONFIG = user_config
+        else:
+            CONFIG.update(user_config)
     # fail on no config
     if (CONFIG is None):
         LOGGER.error(f"Failed to load configuration, please configure.")
